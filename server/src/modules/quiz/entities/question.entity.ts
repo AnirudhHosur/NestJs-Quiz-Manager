@@ -8,7 +8,7 @@ export class Question extends BaseEntity {
 
     @Column({
         type: 'varchar'
-    })    
+    })
     question: string;
 
     @ManyToOne(() => Quiz, (quiz) => quiz.questions)

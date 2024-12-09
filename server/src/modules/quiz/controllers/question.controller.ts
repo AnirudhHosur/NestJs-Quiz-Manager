@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UsePipes, ValidationPipe } from "@nestjs/common";
-import { CraeteQuestionDto } from "./dto/create-question.dto";
-import { QuestionService } from "./question.service";
-import { Question } from "./question.entity";
-import { QuizService } from "./quiz.service";
+import { QuestionService } from "../services/question.service";
+import { QuizService } from "../services/quiz.service";
+import { Question } from "../entities/question.entity";
+import { CraeteQuestionDto } from "../dto/create-question.dto";
 
 @Controller('question')
 export class QuestionController {
