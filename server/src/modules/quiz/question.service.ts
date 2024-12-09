@@ -16,8 +16,11 @@ export class QuestionService {
         private questionRepository: QuestionRepository
     ) { }
 
-    async createQuestion(questionData: CraeteQuestionDto): Promise<Question> {
-        const question = this.questionRepository.create(questionData);
-        return await this.questionRepository.save(question);
+    async createQuestion(questionData: CraeteQuestionDto, quiz: Quiz): Promise<Question> {
+        const newQuestion = this.questionRepository.create({
+            ...questionData,
+            quiz
+        });
+        return await this.questionRepository.save(newQuestion);
     }
 }
