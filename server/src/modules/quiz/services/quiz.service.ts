@@ -4,6 +4,7 @@ import { CreateQuizDto } from "../dto/create-quiz.dto";
 import { Quiz } from "../entities/quiz.entity";
 import { QuizRepository } from "../repositories/quiz.repository";
 import { Question } from "../entities/question.entity";
+import { UpdateQuizDto } from "../dto/update-quiz.dto";
 
 @Injectable()
 
@@ -36,4 +37,17 @@ export class QuizService {
         const quiz = this.quizRepository.create(quizData);
         return await this.quizRepository.save(quiz);
     }
+
+    async updateQuiz(id: number, updateData: UpdateQuizDto): Promise<Quiz> {
+        const quiz = await this.getQuizById(id);
+        Object.assign(quiz, updateData);
+        return await this.quizRepository.save(quiz);
+    }
+
+    async deleteQuiz(id: number): Promise<{ message: string }> {
+        const quiz = await this.getQuizById(id);
+        await this.quizRepository.remove(quiz);
+        return { message: `Quiz with ID ${id} successfully deleted` };
+    }
+
 }

@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { CreateQuizDto } from "../dto/create-quiz.dto";
 import { Quiz } from "../entities/quiz.entity";
 import { QuizService } from "../services/quiz.service";
+import { UpdateQuizDto } from "../dto/update-quiz.dto";
 
 @Controller('quiz')
 
@@ -23,5 +24,16 @@ export class QuizController {
     @UsePipes(ValidationPipe)
     async postQuiz(@Body() quizData: CreateQuizDto) {
         return await this.quizService.createNewQuiz(quizData);
+    }
+
+    @Patch('/:id')
+    @UsePipes(ValidationPipe)
+    async updateQuizById(@Param('id', ParseIntPipe) id: number, @Body() updateData: UpdateQuizDto): Promise<Quiz> {
+        return await this.quizService.updateQuiz(id, updateData);
+    }
+
+    @Delete('/:id')
+    async deleteQuiz(@Param('id', ParseIntPipe) id: number): Promise<{ message: string }> {
+        return await this.quizService.deleteQuiz(id);
     }
 }
