@@ -28,3 +28,16 @@ This repository contains the codebase for a **Quiz Manager Application** built u
 - **PostgreSQL**
 - **PgAdmin 4**
 - **Postman**
+
+## Testing
+
+- **Unit Tests**: The application includes unit tests written using **Jest** to ensure the functionality of the core components such as controllers, services, and repositories.
+  - Tests are organized in separate `*.spec.ts` files.
+  - **Example**: A test for the `OptionController` is written to check the `getAllOptions()` method, which verifies that it returns an array of options correctly.
+  
+- **Integration Tests**: Integration tests are used to test how different modules work together, including database interactions.
+  - **Jest** with **NestJS testing utilities** (like `Test.createTestingModule`) is used for creating isolated test modules and mocking services.
+  
+- To run the tests:
+  ```bash
+  npm run test
