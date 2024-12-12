@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { typeOrmConfigAsync } from './config/typeorm.config';
 import { QuizModule } from './modules/quiz/quiz.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { QuizModule } from './modules/quiz/quiz.module';
       envFilePath: '.env', // Load environment variables from .env file
     }),
     QuizModule,
-    TypeOrmModule.forRootAsync(typeOrmConfigAsync), // Use the async TypeORM config
+    TypeOrmModule.forRootAsync(typeOrmConfigAsync),
+    UserModule, // Use the async TypeORM config
   ],
   controllers: [AppController],
   providers: [AppService],
