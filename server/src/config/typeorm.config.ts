@@ -16,7 +16,9 @@ export default class TypeOrmConfig {
             password: configService.get<string>('DB_PASSWORD'),
             database: configService.get<string>('DB_NAME'),
             entities: [Quiz, Question, Option, User],
-            synchronize: true, // Automatically sync entities - disable in production!
+            synchronize: false, // Automatically sync entities - disable in production!
+            migrations: ['dist/migrations/*.js'], // Path to migration files
+            migrationsRun: false, // Set to true if you want to auto-run migrations (optional)
         };
     }
 }
