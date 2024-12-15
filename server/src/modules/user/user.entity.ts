@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import * as bcrypt from 'bcrypt';
 import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { UserRoles } from "./enums/user.enum";
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
@@ -32,6 +33,18 @@ export class User extends BaseEntity {
     })
     @Column()
     password: string
+
+    @ApiProperty({
+        description: 'The role of the user',
+        enum: UserRoles,
+        example: UserRoles.MEMBER
+    })
+    @Column({
+        type: 'enum',
+        enum: UserRoles,
+        default: UserRoles.MEMBER
+    })
+    role: UserRoles
 
     @ApiProperty({
         description: 'The timestamp when the user was created',

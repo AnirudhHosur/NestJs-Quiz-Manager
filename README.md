@@ -1,70 +1,166 @@
-# NestJs Quiz Manager
+# NestJS Quiz Manager
 
-This repository contains the codebase for a **Quiz Manager Application** built using **NestJS**. The application is designed to manage quizzes, questions, and options with proper relationships, CRUD operations, and user authentication.
+A NestJS-based application for managing quizzes, questions, and options. This project is designed with a focus on scalability and features a microservices-ready architecture.
 
-## Features
+---
 
-- **Entity Relationships**:
-  - A **Quiz** can have multiple **Questions**
-  - A **Question** can have multiple **Options**
-  - **Users** can create and manage quizzes
+## **Features**
 
-- **Authentication & Authorization**:
-  - User registration and login functionality
-  - JWT (JSON Web Token) based authentication
-  - Password hashing using bcrypt
-  - Protected routes using Passport JWT strategy
+- User Authentication and Authorization
+- Management of Quizzes, Questions, and Options
+- Database Seeding for Development and Testing
+- Dockerized Environment for Easy Deployment
+- Support for Microservices Architecture
+- Automated Testing with Unit and E2E Tests
 
-- **CRUD Operations**:
-  - Create, Read, Update, and Delete operations for all entities (Quiz, Question, Option)
-  - User management operations
+---
 
-- **Validation**:
-  - DTOs (Data Transfer Objects) for input validation
-  - Custom password validation rules
-  - Integrated validation using `class-validator` and `class-transformer`
+## **Getting Started**
 
-- **Database Integration**:
-  - PostgreSQL database integration with TypeORM
-  - Database migrations support
-  - Database visualization using **PgAdmin 4**
+### **Clone the Repository**
+```bash
+git clone <repository-url>
+cd nestjs-quiz-manager
+```
 
-- **Configuration Management**:
-  - Environment-based configuration using `@nestjs/config`
-  - Secure storage of sensitive information in `.env` files
+### **Install Dependencies**
+```bash
+npm install
+```
 
-- **API Testing**:
-  - APIs tested using **Postman**
+### **Environment Variables**
+Create a `.env` file in the root of your project and set the following variables:
 
-- **Modular Architecture**:
-  - Clear separation of concerns between controllers, services, repositories, and entities
-  - Modular structure with dedicated modules for Quiz, User, and Auth
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+DB_NAME=quiz_manager
+APP_SECRET=your_jwt_secret
+PORT=3000
+```
 
-## Technologies Used
+---
 
-- **Node.js**
-- **NestJS**
-- **TypeORM**
-- **PostgreSQL**
-- **JWT & Passport**
-- **Bcrypt**
-- **PgAdmin 4**
-- **Postman**
+## **Database Setup**
 
-## Security Features
+### **Run Migrations**
+Run the following command to set up the database schema:
+```bash
+npm run migration:run
+```
 
-- Password hashing using bcrypt
-- JWT-based authentication
-- Protected routes using Guards
-- Environment variable management
-- Input validation and sanitization
+### **Seed the Database**
+Seed the database with initial data:
+```bash
+npm run seed:run
+```
 
-## Testing
+---
 
-- **Unit Tests**: Using Jest for testing core components
-- **Integration Tests**: Testing module interactions
-- **Authentication Tests**: Verifying security mechanisms
+## **Development**
 
-## Environment Setup
+### **Start the Development Server**
+Run the application in development mode:
+```bash
+npm run start:dev
+```
 
-Create a `.env` file with the following variables:
+### **Start the Production Server**
+Run the application in production mode:
+```bash
+npm run start:prod
+```
+
+---
+
+## **Testing**
+
+### **Run Unit Tests**
+```bash
+npm run test
+```
+
+### **Run E2E Tests**
+```bash
+npm run test:e2e
+```
+
+### **Generate Test Coverage Report**
+```bash
+npm run test:cov
+```
+
+---
+
+## **Seeding Setup**
+
+### **Install Required Packages**
+Ensure the following packages are installed:
+```bash
+npm install typeorm-extension @faker-js/faker
+```
+
+### **Seeder Configuration**
+Update your `DataSource` file to include the seed options:
+
+```typescript
+import { DataSource } from "typeorm";
+import { SeederOptions } from "typeorm-extension";
+
+const options: SeederOptions = {
+    seeds: ["src/database/seeds/**/*.seed.ts"],
+    factories: [],
+};
+
+export const AppDataSource = new DataSource({
+    type: "mysql",           // or other DB type
+    host: "localhost",
+    port: 3306,
+    username: "root",
+    password: "password",
+    database: "my_database",
+    synchronize: true,
+    logging: false,
+    entities: ["src/modules/**/*.entity.ts"],
+    migrations: ["src/database/migrations/**/*.ts"],
+    ...options,
+});
+```
+
+### **Create Seeder Script**
+Add the following script to `package.json`:
+
+```json
+"scripts": {
+    "seed:run": "ts-node ./node_modules/typeorm-extension/cli.js seed:run"
+}
+```
+
+---
+
+## **Running the Application**
+
+### **Development Workflow**
+1. Set up the database by running migrations and seeding:
+   ```bash
+   npm run migration:run
+   npm run seed:run
+   ```
+2. Start the development server:
+   ```bash
+   npm run start:dev
+   ```
+
+### **Production Workflow**
+1. Build the application:
+   ```bash
+   npm run build
+   ```
+2. Start the production server:
+   ```bash
+   npm run start:prod
+   ```
+
+---
