@@ -1,18 +1,19 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ApiTokenCheckMiddleware } from './common/middleware/api-token-checl.middleware';
 import { typeOrmConfigAsync } from './config/typeorm.config';
+import { AuthModule } from './modules/auth/auth.module';
 import { QuizModule } from './modules/quiz/quiz.module';
 import { UserModule } from './modules/user/user.module';
-import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Make the ConfigModule globally available
-      envFilePath: '.env', // Load environment variables from .env file
+      isGlobal: true,
+      envFilePath: '.env',
     }),
     QuizModule,
     TypeOrmModule.forRootAsync(typeOrmConfigAsync),
@@ -22,4 +23,9 @@ import { AuthModule } from './modules/auth/auth.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ApiTokenCheckMiddleware).forRoutes({ path: '/', method: RequestMethod.ALL })
+  }
+
+}
