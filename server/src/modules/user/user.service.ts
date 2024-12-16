@@ -28,4 +28,12 @@ export class UserService {
             }
         });
     }
+
+    async getUserById(id: number): Promise<User | undefined> {
+        return this.userRepo.findOne({
+            where: {
+                id
+            }
+        })
+    }
 }

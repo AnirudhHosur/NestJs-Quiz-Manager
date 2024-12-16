@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { CreateQuizDto } from "../dto/create-quiz.dto";
 import { Quiz } from "../entities/quiz.entity";
 import { QuizService } from "../services/quiz.service";
 import { UpdateQuizDto } from "../dto/update-quiz.dto";
+import { AdminRoleGuard } from "src/modules/auth/admin-role.guard";
 
 @Controller('quiz')
 
@@ -22,6 +23,7 @@ export class QuizController {
 
     @Post('/create')
     @UsePipes(ValidationPipe)
+    @UseGuards(AdminRoleGuard)
     async postQuiz(@Body() quizData: CreateQuizDto) {
         return await this.quizService.createNewQuiz(quizData);
     }

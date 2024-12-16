@@ -6,7 +6,7 @@ export class ApiTokenCheckMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
         const apiToken = req.headers['api-token'];
 
-        if (!apiToken || apiToken !== 'my token') {
+        if (!apiToken || apiToken !== 'my-token') {
             throw new ApiTokenPaymentException
         }
 

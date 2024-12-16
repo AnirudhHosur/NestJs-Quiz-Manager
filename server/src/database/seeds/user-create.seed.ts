@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { DataSource } from "typeorm";
 import { Seeder, SeederFactoryManager } from "typeorm-extension";
+import { UserRoles } from "../../modules/user/enums/user.enum";
 import { User } from "../../modules/user/user.entity";
 
 export class UserCreateSeed implements Seeder {
@@ -12,6 +13,7 @@ export class UserCreateSeed implements Seeder {
             const user = new User();
             user.name = faker.person.fullName();
             user.email = faker.internet.email();
+            user.role = Math.random() < 0.8 ? UserRoles.MEMBER : UserRoles.ADMIN;
             await user.setPassword('Password@123');
             return user;
         }));
